@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Expenses from "./components/Expenses/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
 
 const App = () => {
-  const expense = [
+  const dummy_expenses = [
     {
       id: "e1",
       title: "Toilet Paper",
       amount: 94.12,
       date: new Date(2020, 7, 14),
+      key: "1",
     },
     { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
     {
@@ -16,19 +17,23 @@ const App = () => {
       title: "Car Insurance",
       amount: 294.67,
       date: new Date(2021, 2, 28),
+      key: "2",
     },
     {
       id: "e4",
       title: "New Desk (Wooden)",
       amount: 450,
       date: new Date(2021, 5, 12),
+      key: "3",
     },
   ];
 
-  const addExpenseHandler = (expenses) => {
-    console.log("In App.js");
-    expense.push(expenses);
-    console.log(expense);
+  const [expenses, setExpenses] = useState(dummy_expenses);
+
+  const addExpenseHandler = (exp) => {
+    setExpenses((prevExpenses) => {
+      return [exp, ...prevExpenses];
+    });
   };
 
   // return React.createElement(
@@ -41,7 +46,7 @@ const App = () => {
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expense} />
+      <Expenses items={expenses} />
     </div>
   );
 };
